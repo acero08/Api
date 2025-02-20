@@ -7,10 +7,9 @@ class Categoria(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
-        return f"{self.nombre})"  # Nota el paréntesis extra al final
+        return f"{self.nombre})"
 
 
-# Modelo para ingredientes
 class Ingrediente(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
     unidad_medida = models.CharField(max_length=50)
@@ -19,7 +18,6 @@ class Ingrediente(models.Model):
         return f"{self.nombre} ({self.unidad_medida})"
 
 
-# Modelo para recetas
 class Receta(models.Model):
     nombre = models.CharField(max_length=200)
     categoria = models.ForeignKey(
@@ -33,19 +31,17 @@ class Receta(models.Model):
         return f"{self.nombre})"
 
 
-# Modelo para relacionar recetas e ingredientes (con cantidades)
 class RecetaIngrediente(models.Model):
     receta = models.ForeignKey(
         Receta, on_delete=models.CASCADE, related_name='ingredientes')
     ingrediente = models.ForeignKey(Ingrediente, on_delete=models.CASCADE)
     cantidad = models.DecimalField(
-        max_digits=10, decimal_places=2)  # Cantidad necesaria
+        max_digits=10, decimal_places=2)
 
     def __str__(self):
         return f"{self.cantidad} {self.ingrediente} {self.cantidad}"
 
 
-# Modelo para menús diarios
 class Menu(models.Model):
     nombre = models.CharField(max_length=200)
     fecha = models.DateField()  # Fecha del menú
